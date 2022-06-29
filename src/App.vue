@@ -1,36 +1,30 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-      </div>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-main>
-      <container>
-        <div class="d-flex justify-center py-3"><CardQuestion/></div>
-      </container>
-    </v-main>
-  </v-app>
+  <div id="app">
+    <component :is="$route.meta.layout || 'div'">
+      <router-view />
+    </component>
+  </div>
 </template>
 
-<script>
-//import HelloWorld from './components/HelloWorld';
-import CardQuestion from './components/CardQuestion';
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  name: 'App',
+nav {
+  padding: 30px;
 
-  components: {
-    CardQuestion,
-  },
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-  data: () => ({
-    //
-  }),
-};
-</script>
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>
