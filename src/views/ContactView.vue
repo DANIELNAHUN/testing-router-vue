@@ -1,6 +1,5 @@
 <template>
-  <div>
-    Pagina Contacto
+  <div class="container">
     <CardQuestion/>
   </div>
 </template>
@@ -18,5 +17,8 @@ export default {
 </script>
 
 <style>
-
+.container{
+  display: flex;
+  justify-content: center;
+}
 </style>
