@@ -1,19 +1,26 @@
 <template>
   <div class="container">
-    <div class="card">
+    <div class="card" v-if="cardState">
       <h2> ¿Que te ha parecido el curso? </h2><br>
       <span> Nos importa mucho tu opinion para seguir mejorando
         el contenido y experiencia de la plataforma</span>
         <div class="score-container">
-          <div v-for="item in 5" :key="item">
+          <div v-for="(item,i) in scoreList" :key="i">
             <button
-            v-bind:class="{'is-selected': score.selected}"
-            @click="scoreSelected(item)">{{item}}</button>
+            v-bind:class="{'is-selected': scoreList[i].selected}"
+            @click="scoreSelected(i)">{{i}}</button>
           </div>
         </div>
       <div class="actions">
-        <button @click="sendScore">Enviar Respuesta</button>
+        <button @click="sendScore()">Enviar Respuesta</button>
       </div>
+    </div>
+    <div class="card" v-else>
+      <v-btn @click="changeStateCard" icon><v-icon >mdi-keyboard-return</v-icon></v-btn>
+      <v-img :src="require('../assets/happy.png')"></v-img>
+      <h2>Gracias por tu apoyo</h2>
+      <span>Trataremos de seguir mejorando</span><br>
+      <span>{{messageFinal}}</span>
     </div>
     <div>
 
@@ -24,27 +31,62 @@
     export default {
         data() {
             return {
-              score:{
-                id: null,
-                selected:false,
-              },
-              scoreList: []
+              cardState:true,
+              messageFinal:"",
+              srcImage:"",
+              scoreList: [
+                {id:0,selected:false},
+                {id:1,selected:false},
+                {id:2,selected:false},
+                {id:3,selected:false},
+                {id:4,selected:false}
+                ],
+              messageList:[
+                {id:0,mensaje:"Tienes 0", src:"../assets/sad.png"},
+                {id:1,mensaje:"Tienes 1", src:"../assets/please.png"},
+                {id:2,mensaje:"Tienes 2", src:"../assets/happy.png"},
+                {id:3,mensaje:"Tienes 3", src:"../assets/good.png"},
+                {id:4,mensaje:"Tienes 4", src:"../assets/verygood.png"},
+              ]
             }
         },
         methods:{
           scoreSelected(id){
-            const idSelected = id;
-            const newscore = this.score.selected = !this.score.selected;
-            const listValueSelected ={
-              id: idSelected,
-              state: newscore
+            const idSelected = id
+            const newScore = !this.scoreList[idSelected].selected
+            const newListScore={
+              id:idSelected,
+              selected:newScore
             }
-            this.scoreList.splice(idSelected, 1,listValueSelected);
-
-            console.log(this.scoreList)
+            this.deleteSelectedScore()
+            this.scoreList.splice(idSelected,1,newListScore)
+            //console.log(this.scoreList[idSelected].id)
+          },
+          deleteSelectedScore(){
+            for (var i = 0; i < this.scoreList.length; i++) {
+              const newListBlankScore={
+                id:i,
+                selected:false
+              }
+              this.scoreList.splice(i,1,newListBlankScore)
+            }
           },
           sendScore(){
-            console.log(this.scoreList);
+            var score = ""
+            for (var i = 0; i < this.scoreList.length; i++) {
+              if(this.scoreList[i].selected==true){
+                score = this.scoreList[i].id
+              }
+            }
+            this.messageFinal = this.messageList[score].mensaje
+            var imagesrc = this.srcImage = this.messageList[score].src
+            //var image = document.getElementById('scoreImg');
+           // image.src= imagesrc
+            this.changeStateCard()
+            console.log(imagesrc);
+          },
+          changeStateCard(){
+            this.cardState = !this.cardState
           }
         }
     }
