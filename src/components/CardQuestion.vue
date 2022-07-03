@@ -1,26 +1,25 @@
 <template>
   <div class="container">
-    <div class="card" v-if="cardState">
+    <div class="card" v-if="cardStep">
       <h2> ¿Que te ha parecido el curso? </h2><br>
       <span> Nos importa mucho tu opinion para seguir mejorando
         el contenido y experiencia de la plataforma</span>
         <div class="score-container">
           <div v-for="(item,i) in scoreList" :key="i">
             <button
-            v-bind:class="{'is-selected': scoreList[i].selected}"
-            @click="scoreSelected(i)">{{i}}</button>
+            v-bind:class="{'is-selected': item.selected}"
+            @click="handleScoreItemClick(item)">{{i}}</button>
           </div>
         </div>
       <div class="actions">
-        <button @click="sendScore()">Enviar Respuesta</button>
+        <button @click="changeStateCard()">Enviar Respuesta</button>
       </div>
     </div>
     <div class="card" v-else>
       <v-btn @click="changeStateCard" icon><v-icon >mdi-keyboard-return</v-icon></v-btn>
-      <v-img :src="require('../assets/happy.png')"></v-img>
-      <h2>Gracias por tu apoyo</h2>
-      <span>Trataremos de seguir mejorando</span><br>
-      <span>{{messageFinal}}</span>
+      <v-img :src="scoreSelected.src"></v-img>
+      <h2>Gracias por tu apoyo</h2><br>
+      <span>{{scoreSelected.message}}</span>
     </div>
     <div>
 
@@ -31,62 +30,32 @@
     export default {
         data() {
             return {
-              cardState:true,
-              messageFinal:"",
-              srcImage:"",
+              cardStep:true,
+              scoreSelected:null,
               scoreList: [
-                {id:0,selected:false},
-                {id:1,selected:false},
-                {id:2,selected:false},
-                {id:3,selected:false},
-                {id:4,selected:false}
+                {id:0,selected:false,src:require('../assets/sad.png'),
+                message:"Lamentamos mucho que no te haya gustado el curso,seguiremos trabajando para mejorar."},
+                {id:1,selected:false,src:require('../assets/please.png'),
+                message:"Muchas gracias por darnos la oportunidad, nos esforzaremos para que la sgt sea mejor."},
+                {id:2,selected:false,src:require('../assets/happy.png'),
+                message:"Muchas gracias por valorar el curso, esperamos sigas apostando por nosotros."},
+                {id:3,selected:false,src:require('../assets/good.png'),
+                message:"Muchas gracias por la oportunidad, te esperamos en el siguiente curso."},
+                {id:4,selected:false,src:require('../assets/verygood.png'),
+                message:"Agradecemos por la valorizacion, nos vemos en el siguiente curso."}
                 ],
-              messageList:[
-                {id:0,mensaje:"Tienes 0", src:"../assets/sad.png"},
-                {id:1,mensaje:"Tienes 1", src:"../assets/please.png"},
-                {id:2,mensaje:"Tienes 2", src:"../assets/happy.png"},
-                {id:3,mensaje:"Tienes 3", src:"../assets/good.png"},
-                {id:4,mensaje:"Tienes 4", src:"../assets/verygood.png"},
-              ]
             }
         },
         methods:{
-          scoreSelected(id){
-            const idSelected = id
-            const newScore = !this.scoreList[idSelected].selected
-            const newListScore={
-              id:idSelected,
-              selected:newScore
-            }
-            this.deleteSelectedScore()
-            this.scoreList.splice(idSelected,1,newListScore)
-            //console.log(this.scoreList[idSelected].id)
-          },
-          deleteSelectedScore(){
-            for (var i = 0; i < this.scoreList.length; i++) {
-              const newListBlankScore={
-                id:i,
-                selected:false
-              }
-              this.scoreList.splice(i,1,newListBlankScore)
-            }
-          },
-          sendScore(){
-            var score = ""
-            for (var i = 0; i < this.scoreList.length; i++) {
-              if(this.scoreList[i].selected==true){
-                score = this.scoreList[i].id
-              }
-            }
-            this.messageFinal = this.messageList[score].mensaje
-            var imagesrc = this.srcImage = this.messageList[score].src
-            //var image = document.getElementById('scoreImg');
-           // image.src= imagesrc
-            this.changeStateCard()
-            console.log(imagesrc);
+          handleScoreItemClick(scoreItem){
+            const idSelected = scoreItem.id
+            this.scoreSelected = scoreItem
+            this.scoreList.forEach((item, index) =>{
+              this.scoreList[index].selected = item.id===idSelected
+            })
           },
           changeStateCard(){
-            this.cardState = !this.cardState
+            this.cardStep = !this.cardStep
           }
         }
     }
