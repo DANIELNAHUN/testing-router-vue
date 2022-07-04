@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    Yo soy el Public layout
     <slot></slot>
   </div>
 </template>

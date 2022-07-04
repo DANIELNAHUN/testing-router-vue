@@ -33,6 +33,14 @@ const routes = [
     meta:{
       layout: DefaultLayout
     }
+  },
+  {
+    path: '/chronometer',
+    name: 'chronometer',
+    component:() => import('../views/ChronometerView.vue'),
+    meta:{
+      layout: PublicLayout
+    }
   }
 ]
 
