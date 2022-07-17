@@ -1,83 +1,46 @@
 <template>
   <div class="container-chronometer">
-    <div v-if="pickerdate">
-        <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="date"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="datePickerValue"
-            label="Picker in menu"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="datePickerValue"
-          no-title
-          scrollable
-        >
-          <v-spacer></v-spacer>
-          <v-btn
-            text
-            color="primary"
-            @click="menu = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            @click="$refs.menu.save(date)"
-          >
-            OK
-          </v-btn>
-        </v-date-picker>
-      </v-menu>
+    <div class = "pickerdate-container">
+        <input type="number" class="input-date" placeholder="year" min="1" max="9999" maxlength="4"
+        oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+        v-model="pickerYear">/
+        <input type="number" class="input-date" placeholder="month" min="1" max="12" maxlength="2"
+        oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+        v-model="pickerMonth">/
+        <input type="number" class="input-date" placeholder="day" min="1" max="31" maxlength="2"
+        oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+        v-model="pickerDay"> ---
+        <input type="number" class="input-date" placeholder="hour" min="1" max="23" maxlength="2"
+        oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+        v-model="pickerHour">:
+        <input type="number" class="input-date" placeholder="minutes" min="1" max="59" maxlength="2"
+        oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+        v-model="pickerMin">
     </div>
-    <div v-else-if="pickerhours">
-        <v-time-picker
-          v-model="time"
-          type="month"
-          width="290"
-          class="ml-4"
-        ></v-time-picker>
+    <div>
+      <v-btn  @click="startChronometer">Iniciar cronometro</v-btn>
     </div>
-    <div v-else>
-        <div class="card-container">
+      <div class="card-container">
         <div class="card">
-          <div class="days">00</div>
+          <div class="days">{{day}}</div>
           <p>Days</p>
         </div>
         <div class="card">
-          <div v-if="hours >=10" class="hours">{{hours}}</div>
+          <div v-if="hours >=10">{{hours}}</div>
           <div v-else class="hours">0{{hours}}</div>
           <p>Hours</p>
         </div>
         <div class="card">
-          <div v-if="minutes>=10" class="minutes">{{minutes}}</div>
+          <div v-if="minutes>=10">{{minutes}}</div>
           <div v-else class="minutes">0{{minutes}}</div>
           <p>Minutes</p>
         </div>
         <div class="card">
-          <div v-if="seg>=10" class="seg">{{seg}}</div>
+          <div v-if="seg>=10">{{seg}}</div>
           <div v-else class="seg">0{{seg}}</div>
           <p>Seconds</p>
         </div>
       </div>
-    </div>
-      <div>
-        <v-btn  @click="startChronometer">Iniciar cronometro</v-btn>
-      </div>
-
   </div>
 </template>
 
@@ -87,15 +50,15 @@ export default {
   data(){
     return{
       date: new Date(),
-      menu: false,
-      modal: false,
-      menu2: false,
+      pickerYear:null,
+      pickerMonth:null,
+      pickerDay:null,
+      pickerHour:null,
+      pickerMin:null,
+      day:0,
       hours:0,
       minutes:0,
       seg:0,
-      timedata:"",
-      pickerdate:false,
-      pickerhours:false,
     }
   },
   computed: {
@@ -117,9 +80,24 @@ export default {
     },
   methods:{
     startChronometer(){
-      this.hours = parseFloat(format(this.date,'HH'))
-      this.minutes = parseFloat(format(this.date,'mm'))
-      this.seg = parseFloat(format(this.date,'ss'))
+      var msegMinuto = 1000 * 60;
+      var msegHora = msegMinuto * 60;
+      var msegDia = msegHora * 24;
+      var hoy = new Date()
+
+      var dateCr = new Date(this.pickerYear,this.pickerMonth-1,this.pickerDay, this.pickerHour, this.pickerMin,0)
+      var tiempo = dateCr - hoy
+      var days = Math.floor(tiempo/ msegDia)
+      tiempo = tiempo - (days * msegDia)
+      var horas = Math.floor(tiempo / msegHora)
+      tiempo = tiempo - (horas * msegHora)
+
+      var minutos = Math.floor(tiempo /msegMinuto)
+      tiempo = tiempo - (minutos * msegMinuto)
+
+      this.day = days
+      this.hours = horas
+      this.minutes = minutos
     },
     //Seconds
     loadSec(){
@@ -128,7 +106,6 @@ export default {
       }
       this.seg--
       this.loadMinutes(this.seg)
-      //this.timedata = new Date().toLocaleTimeString();
     },
     //Minutes
     loadMinutes(seg){
@@ -136,7 +113,7 @@ export default {
         setTimeout(() => this.minutes--,500)
       }
       else if(seg == 0 && this.minutes==0){
-        setTimeout(() => this.minutes=59,500)
+        setTimeout(() => this.minutes=0,500)
       }
       this.loadHoras(seg,this.minutes)
     },
@@ -147,7 +124,17 @@ export default {
             this.hours--},500)
     }else if(seg == 0 && min ==0 && this.hours==0){
         setTimeout(()=>{
-            this.hours=2},500)
+            this.hours=0},500)
+    }
+    this.loadDays(seg,min,this.hours)
+    },
+    loadDays(seg,min,hour){
+      if(seg == 0 && min ==0 && hour==0 && this.day!==0){
+        setTimeout(()=>{
+            this.day--},500)
+    }else if(seg == 0 && min ==0 && hour==0 && this.day==0){
+        setTimeout(()=>{
+            this.day=0},500)
     }
     }
   },
@@ -208,8 +195,32 @@ export default {
   border-radius:5px;
 }
 .container-chronometer .card-container .card p{
-    font-size:13px;
+    font-size:15px;
     font-weight:bold;
-    color:#dedede;
+    color:#0f3854;
+}
+.pickerdate-container{
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items:center;
+  padding: 50px;
+  row-gap: 20px;
+  color: #6d6868;
+  font-size: 1rem;
+}
+.input-date{
+  text-align: center;
+  max-width: 80px;
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1rem;
+  color: #1a0116;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
 }
 </style>
