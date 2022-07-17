@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <slot></slot>
+  <div>
+    <v-app>
+      <slot></slot>
+    </v-app>
   </div>
 </template>
 
