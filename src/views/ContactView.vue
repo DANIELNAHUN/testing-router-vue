@@ -1,23 +1,23 @@
 <template>
   <div class="container">
-    <CardQuestion/>
+    <CardQuestion />
   </div>
 </template>
 
 <script>
-import CardQuestion from '@/components/CardQuestion.vue';
+import CardQuestion from "@/components/CardQuestion.vue";
 export default {
   components: {
     CardQuestion,
   },
-  created () {
+  created() {
     console.log(this.$route);
   },
-}
+};
 </script>
 
 <style>
-.container{
+.container {
   display: flex;
   justify-content: center;
   height: 100%;
