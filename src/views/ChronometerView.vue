@@ -17,13 +17,4 @@ export default {
 </script>
 
 <style>
-html,
-body {
-  height: 100%;
-}
-body {
-  background: #0f3854;
-  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
-  background-size: 100%;
-}
 </style>
