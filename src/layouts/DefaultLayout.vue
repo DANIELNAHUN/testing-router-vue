@@ -1,11 +1,15 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/unsplash">Unsplash</router-link> |
+    <v-app-bar
+      absolute
+      color="white"
+      elevate-on-scroll
+      scroll-target="#scrolling-techniques-7"
+    >
+      <router-link to="/">Unsplash</router-link> |
       <router-link to="/cardquestion">CardQuestion</router-link> |
       <router-link to="/chronometer">Chronometer</router-link>
-    </nav>
+    </v-app-bar>
     <slot></slot>
   </div>
 </template>

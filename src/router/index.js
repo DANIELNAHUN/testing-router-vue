@@ -2,20 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 //import PublicLayout from '../layouts/PublicLayout.vue'
-import HomeView from '../views/HomeView.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
-    meta: {
-      layout: DefaultLayout
-    }
-  },
-  {
-    path: '/unsplash',
     name: 'unsplash',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

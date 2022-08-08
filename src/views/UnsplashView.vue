@@ -3,7 +3,7 @@
     <h1>Unsplash</h1>
     <v-text-field v-model="searchQuery" label="search"></v-text-field>
     <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
-    <v-btn @click="getSearchedImages" color="primary">Buscar</v-btn>
+    <v-btn @click="getSearchedImages" color="danger">Buscar</v-btn>
     <v-divider></v-divider>
 
     <v-row>
@@ -34,7 +34,7 @@
 </template>
 <script>
 import axios from "axios";
-const UNPLASH_BASE_URL = "https://api.unsplash.com";
+const UNPLASH_BASE_URL = "https://api.unsplash.com/";
 const UNPLASH_ACCES_KEY = "sFP_BSCYccd3l2seQJVlRuN_TRayKVDKPaaFDG-y3Ig";
 export default {
   components: {},
