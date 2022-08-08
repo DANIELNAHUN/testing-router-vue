@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This is an about page</h1>
+    <h1>Unsplash</h1>
     <v-text-field v-model="searchQuery" label="search"></v-text-field>
     <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
     <v-btn @click="getSearchedImages" color="primary">Buscar</v-btn>

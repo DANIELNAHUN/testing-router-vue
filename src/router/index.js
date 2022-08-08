@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
-import PublicLayout from '../layouts/PublicLayout.vue'
+//import PublicLayout from '../layouts/PublicLayout.vue'
 import HomeView from '../views/HomeView.vue'
 Vue.use(VueRouter)
 
@@ -15,21 +15,21 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/unsplash',
+    name: 'unsplash',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/UnsplashView.vue'),
     meta: {
-      layout: PublicLayout
+      layout: DefaultLayout
     }
   },
 
   {
-    path: '/contact',
-    name: 'contact',
-    component: () => import('../views/ContactView.vue'),
+    path: '/cardquestion',
+    name: 'cardquestion',
+    component: () => import('../views/CardQuestionView.vue'),
     meta: {
       layout: DefaultLayout
     }
@@ -39,7 +39,7 @@ const routes = [
     name: 'chronometer',
     component: () => import('../views/ChronometerView.vue'),
     meta: {
-      layout: PublicLayout
+      layout: DefaultLayout
     }
   }
 ]
