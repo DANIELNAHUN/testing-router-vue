@@ -53,11 +53,12 @@ export default {
 }
 .link-container{
   display: flex;
-  justify-content:space-evenly;
+  justify-content:center;
+  gap: 70px;
   align-items: center;
   padding: 5px 5px;
   background: #6a75ab;
-  height: 90px;
+  max-width: 100%;
 }
 .link-container a {
   color:#fff;
