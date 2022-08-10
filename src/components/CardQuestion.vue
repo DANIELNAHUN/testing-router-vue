@@ -92,7 +92,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .card {
   padding: 30px 25px;
   max-height: 600px;

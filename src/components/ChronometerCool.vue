@@ -187,20 +187,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 * {
   margin: 0;
   padding: 0;
 }
-html,
-body {
-  height: 100%;
-}
-body {
-  background: #0f3854;
-  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
-  background-size: 100%;
-}
+
 .container-chronometer {
   display: flex;
   flex-direction: column;

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Unsplash</h1>
     <v-text-field v-model="searchQuery" label="search"></v-text-field>
     <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
-    <v-btn @click="getSearchedImages" color="danger">Buscar</v-btn>
+    <v-btn @click="getImages" color="danger">Buscar</v-btn>
     <v-divider></v-divider>
 
     <v-row>
@@ -60,6 +60,21 @@ export default {
   },
   created() {},
   methods: {
+    getImages(){
+      const params ={
+        page: 1,
+        client_id: UNPLASH_ACCES_KEY,
+      };
+      axios.get(`${UNPLASH_BASE_URL}/photos`,{params})
+      .then((response)=>{
+        this.unplashImage = response.data.results;
+      })
+      .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+        console.log("getImages")
+    },
     getSearchedImages() {
       const params = {
         query: this.searchQuery,
@@ -81,3 +96,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.container {
+  max-width: 65%;
+}
+</style>
