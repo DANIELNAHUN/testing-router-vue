@@ -1,9 +1,24 @@
 <template>
   <div data-app class="container">
     <h1>Unsplash</h1>
-    <v-text-field v-model="searchQuery" label="search"></v-text-field>
-    <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
-    <v-btn @click="getSearchedImages" color="danger">Buscar</v-btn>
+    <v-text-field v-model="searchQuery" label="Search from Unsplash"></v-text-field>
+    <v-row align="center">
+      <v-col
+        class="d-flex"
+        cols="12"
+        sm="6"
+      >
+        <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
+      </v-col>
+      <v-col
+        class="d-flex"
+        cols="12"
+        sm="6"
+      >
+      <v-btn   dark @click="getSearchedImages" depressed >Search</v-btn>
+      </v-col>
+    </v-row>
+
     <v-divider></v-divider>
 
     <v-row>
@@ -84,8 +99,5 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 65%;
-}
-.v-input__control {
-  max-width: 50px;
 }
 </style>
