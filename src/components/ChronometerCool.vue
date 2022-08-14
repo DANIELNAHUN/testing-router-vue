@@ -54,7 +54,7 @@
       />
     </div>
     <div>
-      <v-btn @click="startChronometer">Iniciar cronometro</v-btn>
+      <v-btn rounded  outlined @click="startChronometer">Iniciar cronometro</v-btn>
     </div>
     <div class="container-card">
       <div class="card">
@@ -246,7 +246,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 50px;
+  padding: 30px;
   row-gap: 20px;
   color: #6d6868;
   font-size: 1rem;

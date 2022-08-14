@@ -1,6 +1,8 @@
 <template>
   <div data-app class="container">
-    <h1>Unsplash</h1>
+    <h1>Unsplash</h1><br>
+    <p>La fuente de Internet de imágenes de uso libre.</p>
+    <p>Con recursos de creadores de todo el mundo.</p><br>
     <v-text-field v-model="searchQuery" label="Search from Unsplash"></v-text-field>
     <v-row align="center">
       <v-col
