@@ -1,29 +1,30 @@
 <template>
   <div data-app class="container">
-    <h1>Unsplash</h1><br>
+    <h1>Unsplash</h1>
+    <br />
     <p>La fuente de Internet de imágenes de uso libre.</p>
-    <p>Con recursos de creadores de todo el mundo.</p><br>
-    <v-text-field v-model="searchQuery" label="Search from Unsplash"></v-text-field>
+    <p>Con recursos de creadores de todo el mundo.</p>
+    <br />
+    <v-text-field
+      v-model="searchQuery"
+      label="Search from Unsplash"
+    ></v-text-field>
     <v-row align="center">
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select v-model="colorSelected" :items="colors" label="Colors"></v-select>
+      <v-col class="d-flex" cols="12" sm="6">
+        <v-select
+          v-model="colorSelected"
+          :items="colors"
+          label="Colors"
+        ></v-select>
       </v-col>
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-      <v-btn   dark @click="getSearchedImages" depressed >Search</v-btn>
+      <v-col class="d-flex" cols="12" sm="6">
+        <v-btn dark @click="getSearchedImages" depressed>Search</v-btn>
       </v-col>
     </v-row>
 
     <v-divider></v-divider>
-
-    <v-row>
+    <div class="alert" v-if="!unplashImage.length">NO HAY IMAGENES PARA MOSTRAR</div>
+    <v-row v-else>
       <v-col
         v-for="(image, index) in unplashImage"
         :key="index"
@@ -57,9 +58,9 @@ export default {
   components: {},
   data() {
     return {
-      searchQuery: "",
+      searchQuery: "cafe",
       unplashImage: [],
-      colorSelected: "",
+      colorSelected: "yellow",
       colors: [
         "black_and_white",
         "black",
@@ -75,7 +76,9 @@ export default {
       ],
     };
   },
-  created() {},
+  created() {
+    this.getSearchedImages();
+  },
   methods: {
     getSearchedImages() {
       const params = {
@@ -101,5 +104,8 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 65%;
+}
+.alert{
+  padding: 15px 15px;
 }
 </style>
